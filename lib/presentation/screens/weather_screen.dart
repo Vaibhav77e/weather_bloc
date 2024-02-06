@@ -1,11 +1,8 @@
-import 'dart:convert';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:weather_bloc_app/bloc/weather_bloc.dart';
-import 'package:weather_bloc_app/secrets.dart';
 
 import '../widgets/additional_info_item.dart';
 import '../widgets/hourly_forecast_item.dart';
@@ -41,9 +38,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
         actions: [
           IconButton(
             onPressed: () {
-              // setState(() {
-              //   weather = getCurrentWeather();
-              // });
+             context.read<WeatherBloc>().add(WeatherFetched());
             },
             icon: const Icon(Icons.refresh),
           ),
@@ -65,8 +60,6 @@ class _WeatherScreenState extends State<WeatherScreen> {
           }
 
           final data = state.weatherModels;
-
-
 
           final currentTemp = data.currentTemp;
           final currentSky = data.currentSky;
@@ -135,28 +128,29 @@ class _WeatherScreenState extends State<WeatherScreen> {
                   ),
                 ),
                 const SizedBox(height: 8),
-                // SizedBox(
-                //   height: 120,
-                //   child: ListView.builder(
-                //     itemCount: 5,
-                //     scrollDirection: Axis.horizontal,
-                //     itemBuilder: (context, index) {
-                //       final hourlyForecast = data['list'][index + 1];
-                //       final hourlySky =
-                //           data['list'][index + 1]['weather'][0]['main'];
-                //       final hourlyTemp =
-                //           hourlyForecast['main']['temp'].toString();
-                //       final time = DateTime.parse(hourlyForecast['dt_txt']);
-                //       return HourlyForecastItem(
-                //         time: DateFormat.j().format(time),
-                //         temperature: hourlyTemp,
-                //         icon: hourlySky == 'Clouds' || hourlySky == 'Rain'
-                //             ? Icons.cloud
-                //             : Icons.sunny,
-                //       );
-                //     },
-                //   ),
-                // ),
+
+                SizedBox(
+                  height: 120,
+                  child: ListView.builder(
+                    itemCount: 5,
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, index) {
+                      final hourlyForecast = data.hourlyForecast[index + 1];
+                      final hourlySky =
+                          data.hourlySky[index + 1]['weather'][0]['main'];
+                      final hourlyTemp =
+                          hourlyForecast['main']['temp'].toString();
+                      final time = DateTime.parse(hourlyForecast['dt_txt']);
+                      return HourlyForecastItem(
+                        time: DateFormat.j().format(time),
+                        temperature: hourlyTemp,
+                        icon: hourlySky == 'Clouds' || hourlySky == 'Rain'
+                            ? Icons.cloud
+                            : Icons.sunny,
+                      );
+                    },
+                  ),
+                ),
 
                 const SizedBox(height: 20),
                 const Text(

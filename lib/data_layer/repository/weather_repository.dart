@@ -11,7 +11,7 @@ class WeatherRepository{
       print('Success 6');
     try {
       print('Success 7');
-      String cityName = 'London';
+      String cityName = 'Bangalore';
       final weatherData = await weatherDataProvider.getCurrentWeather(cityName);
       print('Success 8');
 

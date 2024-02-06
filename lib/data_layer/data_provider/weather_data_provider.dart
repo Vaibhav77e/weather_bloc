@@ -16,6 +16,7 @@ class WeatherDataProvider{
       print(res.body);
       return res.body;
     } catch (e) {
+      print(e.toString());
       throw e.toString();
     }
   }
