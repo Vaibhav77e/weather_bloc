@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:weather_bloc_app/secrets.dart';
-import 'additional_info_item.dart';
-import 'hourly_forecast_item.dart';
+
+import '../widgets/additional_info_item.dart';
+import '../widgets/hourly_forecast_item.dart';
+
 
 class WeatherScreen extends StatefulWidget {
   const WeatherScreen({super.key});
